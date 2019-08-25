@@ -82,20 +82,23 @@ UNJSON <- function(file) {
 
 GLICKO <- function(input) {
   require(PlayerRatings)
+  require(lubridate)
+  unloadNamespace("ggraph")
+  unloadNamespace("igraph")
 
   output =
     input %>%
     mutate(Date = ymd(Date)) %>%
     mutate(Time =
              min(Date) %--% Date %>%
-             as.period() %>% day()) %>%
+             as.period() %>% time_length(unit = "days")) %>%
     select(Time, winner_name, loser_name) %>%
     mutate(Score = 1)
 
   Elo =
     output %>%
     mutate_if(.predicate = is.factor, .funs = as.character) %>%
-    glicko2(gamma = 0, tau = 1.2)
+    glicko2(gamma = 0, tau = 1.2, history = F)
 
   return(Elo)
 }

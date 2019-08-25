@@ -21,16 +21,16 @@ Correspondance =
 
 Tocheck = setdiff(Players, Correspondance$Player)
 
-Correspondance =
-  Tocheck %>% str_split(pattern = " ") %>% flatten_chr() %>%
-  set_names() %>%
-  map(.f = agrep,
-      x = Elo$Player,
-      value = T) %>%
-  map(.f =  ~ data.table(Reference = .)) %>%
-  bind_rows(.id = "Player") %>%
-  count(Reference) %>%
-  filter(n == max(n)) %>% select(Reference) %>%
-  cbind.data.frame(Player = Tocheck) %>%
-  bind_rows(Correspondance)
-
+# Correspondance =
+#   Tocheck %>% str_split(pattern = " ") %>% flatten_chr() %>%
+#   set_names() %>%
+#   map(.f = agrep,
+#       x = Elo$Player,
+#       value = T) %>%
+#   map(.f =  ~ data.table(Reference = .)) %>%
+#   bind_rows(.id = "Player") %>%
+#   count(Reference) %>%
+#   filter(n == max(n)) %>% select(Reference) %>%
+#   cbind.data.frame(Player = Tocheck) %>%
+#   bind_rows(Correspondance)
+#
